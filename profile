@@ -36,3 +36,8 @@ fi
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 source "$HOME/.alias"
+if [ -f "$HOME/.homebrew.profile" ]; then
+  source $HOME/.homebrew.profile
+fi
+
+alias gohome="ssh eugene@xtreme-computers.dyndns.org -p2222"
