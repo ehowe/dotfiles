@@ -45,3 +45,18 @@ alias c="clear"
 alias retab="find . -iname '*.rb' | xargs sed -Ei '' 's/  /  /g'"
 alias ey-meta='CLOUD_URL=https://cloud-meta.engineyard.com ey'
 alias pt=papertrail
+alias rff='r --fail-fast'
+alias gmf='git merge --ff-only'
+alias grep="grep --color"
+alias egrep="egrep --color"
+alias ls='ls --color=auto'
+alias server='ssh eugene@server'
+alias xbmc='ssh xbmc@192.168.1.4'
+alias bridge="SSH_ORIGINAL_COMMAND='su - awsm' HADRIAN_AMAZON_ID='i-04f6cc7f' HADRIAN_FEATURES='base' ssh hadrian-meta"
+alias buckman="SSH_ORIGINAL_COMMAND='su - deploy' HADRIAN_AMAZON_ID='i-c66b43ce' HADRIAN_FEATURES='base' ssh hadrian"
+alias mission="SSH_ORIGINAL_COMMAND='su - deploy' HADRIAN_AMAZON_ID='i-fa99de93' HADRIAN_FEATURES='base' ssh hadrian"
+alias temple="SSH_ORIGINAL_COMMAND='su - deploy' HADRIAN_AMAZON_ID='i-8dde41f6' HADRIAN_FEATURES='base' ssh hadrian"
+alias smithy_staging="SSH_ORIGINAL_COMMAND='su - deploy' HADRIAN_AMAZON_ID='i-11ab2522' HADRIAN_FEATURES='base' ssh hadrian"
+alias smithy_prod="SSH_ORIGINAL_COMMAND='su - deploy' HADRIAN_AMAZON_ID='i-913427e0' HADRIAN_FEATURES='base' ssh hadrian-meta"
+alias digitalocean="ssh -p2200 eugene@107.170.158.208"
+alias gitlab="ssh root@107.170.158.208"

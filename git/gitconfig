@@ -1,6 +1,6 @@
 [user]
-  name = Josh Lane
-  email = me@joshualane.com
+  name = Eugene Howe
+  email = eugene@xtreme-computers.net
 [color]
   diff = auto
   status = auto
@@ -56,7 +56,7 @@
 [branch]
   autosetuprebase = always
 [github]
-  user = lanej
+  user = eugene@xtreme-computers.net
   ;password = !security find-generic-password -gs github.password 2>&1 | grep "^password" | awk '{print $2}'
   password = !security 2>&1 >/dev/null find-generic-password -gs github.password | ruby -e 'print $1 if STDIN.gets =~ /^password: \\\"(.*)\\\"$/'
 [rerere]

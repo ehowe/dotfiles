@@ -42,9 +42,13 @@ setopt extended_history
 
 unsetopt correct
 unsetopt correct_all
+
+PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH:/usr/local/bin"
+
 source ~/.alias
+source /usr/local/share/chruby/chruby.sh
+source /usr/local/share/chruby/auto.sh
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+chruby ruby-1.9
 
-# added by travis gem
-[ -f /Users/jlane/.travis/travis.sh ] && source /Users/jlane/.travis/travis.sh
+ruby_version=$(ruby -v | awk '{print $2}')

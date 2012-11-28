@@ -1,0 +1,1 @@
+nohup bash -c "while [ 1 ]; do ssh -o ExitOnForwardFailure=yes -o ConnectTimeout=2 -o TCPKeepAlive=yes -o ServerAliveInterval=2 -o ServerAliveCountMax=2 -N -D 9999 eugene@xtreme-computers.dyndns.org -p2222 -i ~/.ssh/id_dsa; sleep 1; done" &
