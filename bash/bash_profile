@@ -22,3 +22,7 @@ if [ -f "$HOME/.homebrew.profile" ]; then
 fi
 
 alias gohome="ssh eugene@xtreme-computers.dyndns.org -p2222"
+
+if [ -d "$HOME/.cinderalla" ]; then
+  source $HOME/.cinderella.profile
+fi
