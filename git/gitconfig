@@ -46,7 +46,7 @@
 	slp = log --stat -p
 	cah = commit --amend -CHEAD
 [core]
-  editor = /usr/bin/vim
+  editor = /usr/local/bin/vim
   excludesfile = ~/.gitignore
   whitespace = trailing-space,space-before-tab,blank-at-eol
 [apply]
@@ -66,3 +66,11 @@
 [filter "media"]
 	clean = git-media-clean %f
 	smudge = git-media-smudge %f
+[hub]
+	host = github.apple.com
+	host = apple.github.com
+[http]
+	sslVerify = false
+	sslVerify = true
+[pager]
+	branch = false

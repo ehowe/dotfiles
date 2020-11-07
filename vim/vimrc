@@ -4,6 +4,39 @@ set nocompatible
 " modelines
 set modelines=5
 
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim.git'
+Plugin 'jlanzarotta/bufexplorer.git'
+Plugin 'kien/ctrlp.vim.git'
+Plugin 'mattn/gist-vim.git'
+Plugin 'scrooloose/nerdcommenter.git'
+Plugin 'scrooloose/nerdtree.git'
+Plugin 'msanders/snipmate.vim.git'
+Plugin 'AndrewRadev/splitjoin.vim.git'
+Plugin 'scrooloose/syntastic.git'
+Plugin 'leafgarland/typescript-vim.git'
+Plugin 'elixir-lang/vim-elixir'
+Plugin 'tpope/vim-fugitive.git'
+Plugin 'fatih/vim-go.git'
+Plugin 'tpope/vim-haml.git'
+Plugin 'mxw/vim-jsx'
+Plugin 'slack/vim-l9.git'
+Plugin 'tpope/vim-markdown.git'
+Plugin 'tpope/vim-rails.git'
+Plugin 'depuracao/vim-rdoc.git'
+Plugin 'tpope/vim-repeat.git'
+Plugin 'vim-ruby/vim-ruby.git'
+Plugin 'derekwyatt/vim-scala.git'
+Plugin 'tpope/vim-surround.git'
+Plugin 'tpope/vim-vividchalk.git'
+Plugin 'noprompt/vim-yardoc.git'
+Plugin 'vim-scripts/xorium.vim.git'
+Plugin 'rafi/awesome-vim-colorschemes'
+Plugin 'junegunn/vim-easy-align'
+Plugin 'jremmen/vim-ripgrep'
+call vundle#end()
+
 " pathogen.vim ftw
 filetype off
 call pathogen#incubate()
@@ -44,7 +77,7 @@ syntax on
 
 " 256 colors, colorscheme
 set t_Co=256
-colorscheme xorium
+colorscheme onedark
 set vb t_vb=
 
 filetype plugin indent on
@@ -64,6 +97,8 @@ set laststatus=2
 " use bash so that rvm works
 set shell=bash
 
+xmap ga :EasyAlign
+
 " NT bindings
 map <leader>n :NERDTreeToggle<CR>
 map <leader>ntm :NERDTreeMirror<CR>
@@ -77,12 +112,12 @@ map <leader>ntf :NERDTreeFind<CR>
 :map K <Nop>
 
 " Align bindings
-" map <leader>a= to :Align = (rather than :Align := )
-map <leader>a= :Align =<CR>
-map <leader>ah :Align =><CR>
-map <leader>a# :Align #<CR>
-map <leader>a{ :Align {<CR>
-map <leader>A :Align [A-Z].*<CR>:'<,'>s/\s*$//<CR><C-l>
+"map <leader>a= to :Align = (rather than :Align := )
+map <leader>ah :EasyAlign =><CR>
+map <leader>a# :EasyAlign #<CR>
+map <leader>a{ :EasyAlign {<CR>
+map <leader>a: :EasyAlign :<CR>
+map <leader>A :EasyAlign [A-Z].*<CR>:'<,'>s/\s*$//<CR><C-l>
 map <leader>= ggVG=<CR>
 map <leader>ct :set et <bar> retab<CR>
 
@@ -121,13 +156,20 @@ nnoremap <A-s> <C-w>s
 nnoremap <A-q> <C-w>q
 
 " grep
-map <leader>a :Ack<space>
-map <leader>a* :Ack<space><cword><CR>
+map <leader>a :Rg<space>
+map <leader>a* :Rg<space><cword><CR>
 
 
 " ctrlp
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.log,.git,*/bundle/*
-let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
+if executable('rg')
+  set grepprg=rg\ --color=never
+  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+  let g:ctrlp_use_caching = 0
+endif
+"set wildignore+=*/tmp/**,*.scssc,*.sassc,*compiled*
+"let g:ctrlp_custom_ignore = '.*\(node_modules\|build\|bower_components\).*'
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.log,.git,*/bundle/*,*/node_modules/*
+"let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$\|node_modules'
 map <leader>f :CtrlP<CR>
 map <leader>g :CtrlPBuffer<CR>
 map <leader>cf :CtrlPClearCache<CR>
@@ -154,6 +196,7 @@ set cursorline
 
 " remove trailing whitespace automatically
 autocmd FileType c,cpp,java,php,ruby autocmd BufWritePre <buffer> :%s/\s\+$//e
+au BufRead,BufNewFile *.mote set filetype=html
 
 " retab on write
 autocmd FileType c,cpp,java,php,ruby autocmd BufWritePre <buffer> :set et | retab

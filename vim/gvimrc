@@ -1,7 +1,7 @@
-set guifont=Inconsolata:h14.00
-colorscheme xorium
+set guifont=SF\ Mono:h12.00
 set autoread
 set gcr=n:blinkon0
+set bg=light
 
 if has("gui_macvim")
   " Fullscreen takes up entire screen
@@ -9,7 +9,7 @@ if has("gui_macvim")
 
   " Command-Shift-F for Ack
   macmenu Window.Toggle\ Full\ Screen\ Mode key=<nop>
-  map <D-F> :Ack<space>
+  map <D-F> :Rg<space>
 
   " Command-/ to toggle comments
   map <D-/> <plug>NERDCommenterToggle<CR>

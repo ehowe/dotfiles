@@ -6,3 +6,41 @@ if defined?(PryNav)
   Pry.commands.alias_command 's', 'step'
   Pry.commands.alias_command 'n', 'next'
 end
+
+Pry::Commands.create_command "start-passenger" do
+  description "Starts a passenger server with a pry listener."
+
+  banner <<-BANNER
+    Usage: start-passenger
+  BANNER
+
+  command_options(
+    :requires_gem => %w(passenger pry-remote)
+  )
+
+  def process
+    require "pry-remote"
+
+    fork { exec "passenger", "start", "--port", "9292" }
+
+    fork do
+      $0 = "passenger pry"
+      loop { PryRemote::CLI.new(%w(--wait)).run }
+    end
+
+    trap("INT") { Process.waitall; exit }
+
+    Process.waitall
+  end
+end
+
+begin
+  if File.exist?("./app.rb")
+    require File.expand_path("./app.rb")
+    if defined?(RMM)
+      include RMM::Models
+    end
+  end
+rescue
+  puts "whoops"
+end

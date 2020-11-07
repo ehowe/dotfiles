@@ -23,6 +23,12 @@ alias nerd='vim +NERDTree'
 alias g="git"
 alias gds='GIT_PAGER=cat git diff --stat'
 alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
+alias gs="git status -s"
+alias gfa="git fetch --all"
+alias gpl="git pull"
+alias gap="git add -p"
+alias gc="git commit"
+alias gco="git checkout"
 
 # ruby
 alias b='bundle-hack'
@@ -30,7 +36,7 @@ alias bi='bundle-hack install'
 alias be='bundle-exec-hack'
 alias bl='bundle install --local'
 alias guard='be guard'
-alias r='be rspec'
+alias r='rspec'
 alias rff='r --fail-fast'
 alias reado="\`~/bin/ssh-reagent\`"
 
@@ -49,7 +55,6 @@ alias rff='r --fail-fast'
 alias gmf='git merge --ff-only'
 alias grep="grep --color"
 alias egrep="egrep --color"
-alias ls='ls --color=auto'
 alias server='ssh eugene@server'
 alias xbmc='ssh xbmc@192.168.1.4'
 alias bridge="SSH_ORIGINAL_COMMAND='su - awsm' HADRIAN_AMAZON_ID='i-04f6cc7f' HADRIAN_FEATURES='base' ssh hadrian-meta"
