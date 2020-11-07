@@ -4,44 +4,75 @@ set nocompatible
 " modelines
 set modelines=5
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim.git'
-Plugin 'jlanzarotta/bufexplorer.git'
-Plugin 'kien/ctrlp.vim.git'
-Plugin 'mattn/gist-vim.git'
-Plugin 'scrooloose/nerdcommenter.git'
-Plugin 'scrooloose/nerdtree.git'
-Plugin 'msanders/snipmate.vim.git'
-Plugin 'AndrewRadev/splitjoin.vim.git'
-Plugin 'scrooloose/syntastic.git'
-Plugin 'leafgarland/typescript-vim.git'
-Plugin 'elixir-lang/vim-elixir'
-Plugin 'tpope/vim-fugitive.git'
-Plugin 'fatih/vim-go.git'
-Plugin 'tpope/vim-haml.git'
-Plugin 'mxw/vim-jsx'
-Plugin 'slack/vim-l9.git'
-Plugin 'tpope/vim-markdown.git'
-Plugin 'tpope/vim-rails.git'
-Plugin 'depuracao/vim-rdoc.git'
-Plugin 'tpope/vim-repeat.git'
-Plugin 'vim-ruby/vim-ruby.git'
-Plugin 'derekwyatt/vim-scala.git'
-Plugin 'tpope/vim-surround.git'
-Plugin 'tpope/vim-vividchalk.git'
-Plugin 'noprompt/vim-yardoc.git'
-Plugin 'vim-scripts/xorium.vim.git'
-Plugin 'rafi/awesome-vim-colorschemes'
-Plugin 'junegunn/vim-easy-align'
-Plugin 'jremmen/vim-ripgrep'
-call vundle#end()
+" Load vim-plug
+if empty(glob("~/.vim/autoload/plug.vim"))
+    execute '!curl -fLo ~/.vim/autoload/plug.vim https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+endif
 
-" pathogen.vim ftw
-filetype off
-call pathogen#incubate()
-call pathogen#helptags()
-execute pathogen#infect()
+call plug#begin('~/.vim/plugged')
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'MaxMEllon/vim-jsx-pretty'
+Plug 'Sirver/ultisnips'
+Plug 'bling/vim-airline'
+Plug 'depuracao/vim-rdoc'
+Plug 'derekwyatt/vim-scala'
+Plug 'elixir-lang/vim-elixir'
+Plug 'fatih/vim-go'
+Plug 'fishbullet/deoplete-ruby'
+Plug 'honza/vim-snippets'
+Plug 'jlanzarotta/bufexplorer'
+Plug 'jremmen/vim-ripgrep'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/vim-easy-align'
+Plug 'kien/ctrlp.vim'
+Plug 'leafgarland/typescript-vim'
+Plug 'martinda/Jenkinsfile-vim-syntax'
+Plug 'mattn/gist-vim'
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+Plug 'noprompt/vim-yardoc'
+Plug 'rafi/awesome-vim-colorschemes'
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
+Plug 'slack/vim-l9'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-haml'
+Plug 'tpope/vim-markdown'
+Plug 'tpope/vim-pathogen'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-vividchalk'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-ruby/vim-ruby'
+Plug 'vim-scripts/xorium.vim'
+Plug 'w0rp/ale'
+Plug 'yuezk/vim-js'
+call plug#end()
+
+let g:ale_set_highlights = 0
+let g:ale_fix_on_save = 1
+let g:ale_linters = {
+\'javascript': ['flow', 'eslint'],
+\}
+
+
+let g:ale_fixers = {
+\'javascript': ['eslint'],
+\}
+
+if exists("g:gui_oni")
+  set number
+  set noswapfile
+  set smartcase
+  
+  " Enable GUI mouse behavior
+  set mouse=a
+
+  au VimEnter * NERDTree
+endif
 
 " set the title in xterm
 set title
@@ -77,7 +108,7 @@ syntax on
 
 " 256 colors, colorscheme
 set t_Co=256
-colorscheme onedark
+colorscheme solarized8
 set vb t_vb=
 
 filetype plugin indent on
@@ -105,6 +136,8 @@ map <leader>ntm :NERDTreeMirror<CR>
 map <leader>ntc :NERDTreeClose<CR>
 map <leader>ntf :NERDTreeFind<CR>
 
+:map <leader>a :Rg
+
 " disable ex mode
 :map Q <Nop>
 
@@ -126,7 +159,6 @@ map <leader>rts %s/\v\s+$//g<CR>
 map <leader>srt :!sort<CR>
 
 " Ruby
-map <leader>rs :!ruby -c %:p<CR>
 map <leader>r19 :s/\v:([0-9a-z_]+)\s+\=\>\s+/\1: /g<CR>
 map <leader>r18 :s/\v([0-9a-z_"']+):\s+(.*)/:\1 => \2/g<CR>
 
@@ -155,24 +187,13 @@ nnoremap <A-l> <C-w>l
 nnoremap <A-s> <C-w>s
 nnoremap <A-q> <C-w>q
 
-" grep
-map <leader>a :Rg<space>
-map <leader>a* :Rg<space><cword><CR>
-
-
-" ctrlp
-if executable('rg')
-  set grepprg=rg\ --color=never
-  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
-  let g:ctrlp_use_caching = 0
-endif
+let $FZF_DEFAULT_COMMAND = 'rg --files --no-ignore --hidden --follow --glob "!.git/*" --glob "!node_modules/*" --glob "!dist/*" --glob "!tmp/*" --glob "!log/*" --glob "!private/*"'
+let g:rg_command = 'rg --files'
 "set wildignore+=*/tmp/**,*.scssc,*.sassc,*compiled*
 "let g:ctrlp_custom_ignore = '.*\(node_modules\|build\|bower_components\).*'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.log,.git,*/bundle/*,*/node_modules/*
 "let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$\|node_modules'
-map <leader>f :CtrlP<CR>
-map <leader>g :CtrlPBuffer<CR>
-map <leader>cf :CtrlPClearCache<CR>
+map <leader>f :FZF<CR>
 
 " fuckups
 cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
@@ -200,3 +221,10 @@ au BufRead,BufNewFile *.mote set filetype=html
 
 " retab on write
 autocmd FileType c,cpp,java,php,ruby autocmd BufWritePre <buffer> :set et | retab
+
+" UltiSnips
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsListSnippets = "<c-l>"
+let g:UltiSnipsJumpForwardTrigger = "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
+let g:rg_command = "/usr/local/bin/rg --vimgrep -S"

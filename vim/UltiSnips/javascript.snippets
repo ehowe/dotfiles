@@ -1,0 +1,48 @@
+snippet rfcrmm "react functional component" b
+// @flow
+import React from 'react'
+import classnames from 'classnames'
+import css from 'styled-jsx/css'
+import { toQaId } from 'common/formats'
+import type { DefaultComponentProps } from 'common/types/general.types'
+
+type PropsT = DefaultComponentProps & {}
+
+const $1 = (props: PropsT) => {
+	const {
+		'data-qa-id': dataQaId,
+		className,
+		style = {},
+	} = props
+
+	const qaId = toQaId({ parentId: dataQaId, componentId: '$1' })
+
+	return (
+		<div className={classnames('$1-component', className)} style={style} data-qa-id={qaId}>
+			$1
+			<style jsx>{styles}</style>
+		</div>
+	)
+}
+const styles = css\`\`
+export default $1
+endsnippet
+
+snippet storybookrmm "storybook for component" b
+import React from 'react'
+import Markdown from 'react-markdown'
+import css from 'styled-jsx/css'
+import { storiesOf } from '@storybook/react'
+import $1 from './$1'
+import notes from './`!p snip.rv = t[1].lower()`.md'
+
+storiesOf('$1', module)
+  .add('$1', () => (
+	  <$1 />
+	))
+  .add('notes', () => <Markdown source={notes} />)
+
+const styles = \`\`
+endsnippet
+
+# vim:ft=snippets:
